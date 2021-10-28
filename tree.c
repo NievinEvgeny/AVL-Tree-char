@@ -149,11 +149,11 @@ struct avltree* avltree_insert(struct avltree* avltree, char* key, int value)
     {
         return (newNode(key, value));
     }
-    if (key < avltree->key)
+    if (strcmp(key, avltree->key) < 0)
     {
         avltree->left = avltree_insert(avltree->left, key, value);
     }
-    else if (key > avltree->key)
+    else if (strcmp(key, avltree->key) > 0)
     {
         avltree->right = avltree_insert(avltree->right, key, value);
     }
@@ -170,26 +170,26 @@ struct avltree* avltree_insert(struct avltree* avltree, char* key, int value)
     //Если да, то есть 4 случая
 
     // Left Left Case
-    if (balance > 1 && key < avltree->left->key)
+    if (balance > 1 && strcmp(key, avltree->left->key) < 0)
     {
         return AVLTree_RRotate(avltree);
     }
 
     // Right Right Case
-    if (balance < -1 && key > avltree->right->key)
+    if (balance < -1 && strcmp(key, avltree->right->key) > 0)
     {
         return AVLTree_LRotate(avltree);
     }
 
     // Left Right Case
-    if (balance > 1 && key > avltree->left->key)
+    if (balance > 1 && strcmp(key, avltree->left->key) > 0)
     {
         avltree->left = AVLTree_LRotate(avltree->left);
         return AVLTree_RRotate(avltree);
     }
 
     // Right Left Case
-    if (balance < -1 && key < avltree->right->key)
+    if (balance < -1 && strcmp(key, avltree->right->key) < 0)
     {
         avltree->right = AVLTree_RRotate(avltree->right);
         return AVLTree_LRotate(avltree);
